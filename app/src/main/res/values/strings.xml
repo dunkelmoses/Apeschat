@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Apeschat</string>
+    <string name="Register">Register</string>
+    <string name="Login">login</string>
+    <string name="FullName">"Full Name: "</string>
+    <string name="UserName">"Username: "</string>
+    <string name="Email">"Email: "</string>
+    <string name="Password">"Password: "</string>
+    <string name="ConfirmPassword">"Confirm Password: "</string>
+    <string name="SignUp">Sign Up!</string>
+    <string name="LoginToTheAccount">LOGIN</string>
+
+</resources>

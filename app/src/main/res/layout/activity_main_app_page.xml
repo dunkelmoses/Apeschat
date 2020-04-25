@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="60dp"
+    android:paddingLeft="60dp"
+    tools:context=".MainAppPage">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/youLogedIn"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="You are in"
+        android:textAlignment="center"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout"
+        android:layout_below="@+id/youLogedIn"
+        android:layout_centerVertical="true"
+        android:text="LOGOUT"
+        />
+</RelativeLayout>
