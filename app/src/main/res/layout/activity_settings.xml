@@ -11,20 +11,30 @@
        android:id="@+id/toolBar"
        />
     <TextView
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:layout_marginTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ChangePassword"
-        android:textSize="18dp"
-        android:clickable="true"
+        android:text="@string/MyAccount"
+        android:textSize="13dp"
         android:layout_below="@+id/toolBar"
-        android:id="@+id/changePassword"
+        android:id="@+id/myAccount"
+        android:background="@color/gray"
         />
-    <View
+    <ListView
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#EFEFEF"
-        android:layout_below="@+id/changePassword"/>
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:layout_below="@+id/myAccount"
+        android:id="@+id/listItems"
+        android:textColor="@color/Black"
+        android:clickable="true"
+        />
+
 </RelativeLayout>
