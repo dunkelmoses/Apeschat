@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Apeschat</string>
+    <string name="app_name"></string>
     <string name="Register">Register</string>
     <string name="Login">login</string>
     <string name="FullName">"Full Name: "</string>
@@ -9,5 +9,14 @@
     <string name="ConfirmPassword">"Confirm Password: "</string>
     <string name="SignUp">Sign Up!</string>
     <string name="LoginToTheAccount">LOGIN</string>
+    <string name="ForgetPassword">Forgot your password?</string>
+    <string name="EnterYourEmail">"Your Email Address: "</string>
+    <string name="Enter">Enter</string>
+    <string name="VerifyMessage">You must verify your email first</string>
+    <string name="ResendEmail">Resend Email</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ChangePassword">Change Password</string>
 
 </resources>
