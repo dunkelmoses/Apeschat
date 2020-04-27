@@ -12,12 +12,15 @@
     <string name="ForgetPassword">Forgot your password?</string>
     <string name="EnterYourEmail">"Your Email Address: "</string>
     <string name="Enter">Enter</string>
-    <string name="VerifyMessage">You must verify your email first</string>
-    <string name="ResendEmail">Resend Email</string>
+    <string name="VerifyMessage">Click here to verify your email. </string>
+    <string name="ResendEmail"> Resend Email</string>
+    <string name="ChangePassword">Change Password</string>
+    <string name="MyAccount">My Account</string>
+    <string name="AboutMe">About Me</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="ChangePassword">Change Password</string>
-    <string name="MyAccount">My Account</string>
+    <string name="Done">Done</string>
+    <string name="Age">"Age: "</string>
 
 </resources>

@@ -17,10 +17,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
         if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(MainActivity.this, MainAppPage.class));
-            finish();
         }
+
         Button  register = findViewById(R.id.RegisterButton);
         Button login = findViewById(R.id.LoginButton);
 

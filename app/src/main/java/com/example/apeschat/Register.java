@@ -34,11 +34,12 @@ public class Register extends AppCompatActivity {
     public static final String FULL_NAME = "fullName";
     public static final String EMAIL = "email";
     public static final String USERNAME = "username";
+    public static final String BIO = "bio";
+    public static final String AGE = "age";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.activity_rigester);
         fullNameEdit = findViewById(R.id.fullNameEdit);
@@ -49,9 +50,9 @@ public class Register extends AppCompatActivity {
         signUp = findViewById(R.id.signUp);
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+
         if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(Register.this, MainAppPage.class));
-            finish();
         }
 
 

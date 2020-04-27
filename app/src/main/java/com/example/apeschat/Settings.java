@@ -20,7 +20,8 @@ import java.util.Set;
 
 public class Settings extends AppCompatActivity {
     private ListView listView;
-//    private String [] settingList =
+
+    //    private String [] settingList =
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class Settings extends AppCompatActivity {
     }
 
     public class MyOwnAdapter extends BaseAdapter {
-        String[] data = new String[]{"Change Password","Change Username"};
+        String[] data = new String[]{"Change Password", "Change Username","Change Bio"};
 
         @Override
         public int getCount() {
@@ -72,18 +73,28 @@ public class Settings extends AppCompatActivity {
             ImageView arow = convertView.findViewById(R.id.arow);
             oneRow.setText(data[position]);
             arow.setImageResource(R.drawable.arow);
-            oneRow.setOnClickListener(e->{
-                if (position==0){
-                    Toast.makeText(Settings.this,"this is 0"+position,Toast.LENGTH_LONG).show();
-                }
-                else if (position==1){
-                    Toast.makeText(Settings.this,"this is 1"+position,Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(Settings.this,"idk"+position,Toast.LENGTH_LONG).show();
+            oneRow.setOnClickListener(e -> {
+                switch (position) {
+                    case 0:
+                        Toast.makeText(Settings.this, "this is 0" + position, Toast.LENGTH_LONG).show();
+                        //                startActivity(new Intent(Settings.this,MainAppPage.class));
+                        break;
+                    case 1:
+                        Toast.makeText(Settings.this, "this is 1" + position, Toast.LENGTH_LONG).show();
+                        break;
+                    case 2:
+                        Intent intent1 = getIntent();
+                        String ageData = intent1.getStringExtra("age");
+                        String bioData = intent1.getStringExtra("bio");
 
+                        Intent intent2 = new Intent(Settings.this, EditProfile.class);
+                        intent2.putExtra("age",ageData);
+                        intent2.putExtra("bio",bioData);
+                        startActivity(intent2);
+                        break;
+                    default:
+                        Toast.makeText(Settings.this, "idk" + position, Toast.LENGTH_LONG).show();
                 }
-//                startActivity(new Intent(Settings.this,MainAppPage.class));
             });
             return convertView;
         }
