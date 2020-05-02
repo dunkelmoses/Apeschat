@@ -47,25 +47,24 @@ import com.squareup.picasso.Picasso;
 
 
 import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Nullable;
 
 public class MainAppPage extends AppCompatActivity {
-    private Button logout;
+    private Button logout,chatPage,goToSearch,friendProfile;
     private TextView fullName, username, ageView, verifyMessage, aboutMeText;
     private EditText editMyBio;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
     private FirebaseUser fUser;
+    private DocumentReference documentReference;
+    private DatabaseReference reference;
     private String userID;
     private ImageView profileImageView;
     public final int IMAGE_CODE = 1001;
     public final String ON_SUCCESS = "ON_SUCCESS";
     public final String ON_FAILURE = "ON_FAILURE";
-    private DocumentReference documentReference;
-    private DatabaseReference reference;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -178,10 +177,19 @@ public class MainAppPage extends AppCompatActivity {
         profileImageView = findViewById(R.id.profilePic);
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         aboutMeText = findViewById(R.id.bio);
+        chatPage = findViewById(R.id.chatPage);
+        goToSearch = findViewById(R.id.goToSearch);
+        friendProfile = findViewById(R.id.friendProfile);
 
-
-//        aboutMeText.setText(documentSnapshot.getString(Register.BIO));
-//        ageView.setText(documentSnapshot.getString(Register.AGE));
+        chatPage.setOnClickListener(c->{
+            startActivity(new Intent(MainAppPage.this,Chat.class));
+        });
+        goToSearch.setOnClickListener(c->{
+            startActivity(new Intent(MainAppPage.this,SearchForUser.class));
+        });
+        friendProfile.setOnClickListener(c->{
+            startActivity(new Intent(MainAppPage.this,FriendProfile.class));
+        });
 
         if (fUser.getPhotoUrl() != null) {
             Picasso.with(this).load(fUser.getPhotoUrl()).into(profileImageView);

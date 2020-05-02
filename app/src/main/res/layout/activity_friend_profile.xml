@@ -98,36 +98,8 @@
             android:clickable="true"
             />
     </RelativeLayout>
-    <Button
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/friendProfile"
-        android:layout_centerVertical="true"
-        android:layout_above="@+id/goToSearch"
-        android:text="friend profile"
-        />
-    <Button
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/goToSearch"
-        android:layout_centerVertical="true"
-        android:layout_above="@+id/chatPage"
-        android:text="Search"
-        />
-    <Button
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/chatPage"
-        android:layout_centerVertical="true"
-        android:layout_above="@+id/logout"
-        android:text="Chat"
-        />
+
+
     <Button
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"

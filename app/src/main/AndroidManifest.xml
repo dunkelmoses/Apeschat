@@ -3,6 +3,8 @@
     package="com.example.apeschat">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.Manifest.permission.RECORD_AUDIO"/>
+
 
     <application
         android:allowBackup="true"
@@ -11,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditProfile"></activity>
+        <activity android:name=".FriendProfile"></activity>
+        <activity android:name=".SearchForUser" />
+        <activity android:name=".Chat" />
+        <activity android:name=".About" />
+        <activity android:name=".EditProfile" />
         <activity android:name=".Settings" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".Logout" />

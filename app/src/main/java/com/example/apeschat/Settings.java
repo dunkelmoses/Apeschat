@@ -47,7 +47,9 @@ public class Settings extends AppCompatActivity {
     }
 
     public class MyOwnAdapter extends BaseAdapter {
-        String[] data = new String[]{"Change Password", "Change Username","Change Bio"};
+        String[] data = new String[]{
+                "Change Password", "Change Username", "Change Bio", "About"
+        };
 
         @Override
         public int getCount() {
@@ -88,9 +90,12 @@ public class Settings extends AppCompatActivity {
                         String bioData = intent1.getStringExtra("bio");
 
                         Intent intent2 = new Intent(Settings.this, EditProfile.class);
-                        intent2.putExtra("age",ageData);
-                        intent2.putExtra("bio",bioData);
+                        intent2.putExtra("age", ageData);
+                        intent2.putExtra("bio", bioData);
                         startActivity(intent2);
+                        break;
+                    case 3:
+                        startActivity(new Intent(Settings.this,About.class));
                         break;
                     default:
                         Toast.makeText(Settings.this, "idk" + position, Toast.LENGTH_LONG).show();

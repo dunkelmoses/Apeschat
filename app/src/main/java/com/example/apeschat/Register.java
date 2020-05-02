@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -36,6 +38,7 @@ public class Register extends AppCompatActivity {
     public static final String USERNAME = "username";
     public static final String BIO = "bio";
     public static final String AGE = "age";
+    public static final String USER_ID = "id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,8 @@ public class Register extends AppCompatActivity {
                                                     Toast.LENGTH_LONG).show();
                                         }
                                     });
+
+
                                     Toast.makeText(Register.this, "Account Created", Toast.LENGTH_LONG).show();
                                     userID = firebaseAuth.getCurrentUser().getUid();
                                     DocumentReference documentReference = firestore.collection("users").document(userID);
@@ -101,6 +106,11 @@ public class Register extends AppCompatActivity {
                                     userMap.put(FULL_NAME, fullName);
                                     userMap.put(EMAIL, email);
                                     userMap.put(USERNAME, username);
+                                    userMap.put(USER_ID, userID);
+                                    //These two lines create a table with the user id and it has one column which is the username
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UsersData");
+                                    reference.child(userID).child("username").setValue(username);
+
                                     documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
