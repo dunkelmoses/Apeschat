@@ -28,7 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import javax.annotation.Nullable;
 
 public class FriendProfile extends AppCompatActivity {
-    private Button logout;
+    private Button logout,chat;
     private TextView fullName, username, ageView, verifyMessage, aboutMeText;
     private EditText editMyBio;
     private FirebaseAuth firebaseAuth;
@@ -46,10 +46,12 @@ public class FriendProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profile);
 
+        Intent intent = getIntent();
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        chat = findViewById(R.id.chat);
         logout = findViewById(R.id.logout);
         fullName = findViewById(R.id.fullName);
         username = findViewById(R.id.userName);
@@ -64,32 +66,42 @@ public class FriendProfile extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(FriendProfile.this, MainActivity.class));
         });
-        userID = "H4qajgGE5uORgYSWmLjNkydlKQk2";
-        FirebaseUser checkVerifyUser = firebaseAuth.getCurrentUser();
-
+        userID = intent.getStringExtra("userID");
+        chat.setOnClickListener(c->{
+            Intent i = new Intent(FriendProfile.this,Chat.class);
+            i.putExtra("userID",userID);
+            startActivity(i);
+        });
         documentReference = firestore.collection("users").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                fullName.setText(documentSnapshot.getString(Register.FULL_NAME));
-                username.setText(documentSnapshot.getString(Register.USERNAME));
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String bio = dataSnapshot.child(Register.BIO).getValue(String.class);
+                String age = dataSnapshot.child(Register.AGE).getValue(String.class);
+                String usernameString = dataSnapshot.child(Register.USERNAME).getValue(String.class);
+                aboutMeText.setText(bio);
+                ageView.setText(age);
+                username.setText(usernameString);
+            }
 
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FUCK", databaseError.getMessage());
+            }
+        });
+        DatabaseReference referenceToUser = FirebaseDatabase.getInstance().getReference().child("UsersData").child(userID);
+        referenceToUser.child("username").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String usernameString = dataSnapshot.getValue(String.class);
+                username.setText(usernameString);
+            }
 
-                        String bio = dataSnapshot.child(Register.BIO).getValue(String.class);
-                        String age = dataSnapshot.child(Register.AGE).getValue(String.class);
-                        aboutMeText.setText(bio);
-                        ageView.setText(age);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("FUCK", databaseError.getMessage());
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FUCK", databaseError.getMessage());
             }
         });
     }

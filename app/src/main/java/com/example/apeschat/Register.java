@@ -18,8 +18,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -60,11 +64,11 @@ public class Register extends AppCompatActivity {
 
 
         signUp.setOnClickListener(s -> {
-            String email = emailEdit.getText().toString().trim();
-            String password = passwordEdit.getText().toString();
-            String confirmPassword = confirmPasswordEdit.getText().toString();
-            String fullName = fullNameEdit.getText().toString();
-            String username = userNameEdit.getText().toString();
+            final String email = emailEdit.getText().toString().trim();
+            final String password = passwordEdit.getText().toString();
+            final String confirmPassword = confirmPasswordEdit.getText().toString();
+            final String fullName = fullNameEdit.getText().toString();
+            final String username = userNameEdit.getText().toString();
 
             if (email.isEmpty()) {
                 emailEdit.setError("Can not be empty");
@@ -110,6 +114,7 @@ public class Register extends AppCompatActivity {
                                     //These two lines create a table with the user id and it has one column which is the username
                                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UsersData");
                                     reference.child(userID).child("username").setValue(username);
+                                    reference.child(userID).child("userID").setValue(userID);
 
                                     documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -123,9 +128,17 @@ public class Register extends AppCompatActivity {
 
                                 }
                             }
-                        });
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
             }
         });
-
     }
 }
+
+
+
+

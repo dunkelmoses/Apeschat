@@ -99,7 +99,16 @@
             />
     </RelativeLayout>
 
-
+    <Button
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chat"
+        android:layout_centerVertical="true"
+        android:text="CHAT"
+        android:layout_above="@+id/logout"
+        />
     <Button
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"

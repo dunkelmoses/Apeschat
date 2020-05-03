@@ -4,14 +4,12 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:padding="10dp"
-        android:textSize="20dp"
-        android:hint="something"
-        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rowMessages"
-        android:clickable="true"
+        android:id="@+id/rowMessage"
+        android:textSize="20dp"
         />
-
-
 </RelativeLayout>
