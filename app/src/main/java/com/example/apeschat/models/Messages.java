@@ -1,4 +1,4 @@
-package com.example.apeschat;
+package com.example.apeschat.models;
 
 public class Messages {
     private String message;

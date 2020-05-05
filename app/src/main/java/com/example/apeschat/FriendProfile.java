@@ -72,7 +72,7 @@ public class FriendProfile extends AppCompatActivity {
             i.putExtra("userID",userID);
             startActivity(i);
         });
-        documentReference = firestore.collection("users").document(userID);
+//        documentReference = firestore.collection("users").document(userID);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
         reference.addValueEventListener(new ValueEventListener() {

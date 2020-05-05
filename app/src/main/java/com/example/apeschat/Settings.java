@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Set;
 
 public class Settings extends AppCompatActivity {
@@ -48,7 +50,7 @@ public class Settings extends AppCompatActivity {
 
     public class MyOwnAdapter extends BaseAdapter {
         String[] data = new String[]{
-                "Change Password", "Change Username", "Change Bio", "About"
+                "Change Password", "Change Username", "Change Bio", "About" , "Logout"
         };
 
         @Override
@@ -96,6 +98,10 @@ public class Settings extends AppCompatActivity {
                         break;
                     case 3:
                         startActivity(new Intent(Settings.this,About.class));
+                        break;
+                    case 4:
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(Settings.this, MainActivity.class));
                         break;
                     default:
                         Toast.makeText(Settings.this, "idk" + position, Toast.LENGTH_LONG).show();

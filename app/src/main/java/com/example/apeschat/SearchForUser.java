@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import android.widget.ImageView;
 
+import com.example.apeschat.models.UsersData;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;

@@ -3,18 +3,20 @@ package com.example.apeschat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-import android.app.Activity;
+import android.Manifest;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.storage.StorageManager;
 import android.provider.MediaStore;
-import android.text.InputType;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,8 +27,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.apeschat.models.MyLocation;
+import com.example.apeschat.models.UsersData;
+import com.firebase.geofire.GeoFire;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -40,6 +49,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -51,21 +61,21 @@ import java.io.ByteArrayOutputStream;
 import javax.annotation.Nullable;
 
 public class MainAppPage extends AppCompatActivity {
-    private Button logout,chatPage,goToSearch,friendProfile;
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
+    private Button goToSearch, friendProfile;
     private TextView fullName, username, ageView, verifyMessage, aboutMeText;
-    private EditText editMyBio;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
     private FirebaseUser fUser;
     private DocumentReference documentReference;
-    private DatabaseReference reference;
     private String userID;
     private ImageView profileImageView;
     public final int IMAGE_CODE = 1001;
     public final String ON_SUCCESS = "ON_SUCCESS";
     public final String ON_FAILURE = "ON_FAILURE";
-
-
+    public GeoPoint geoPoint;
+    public FusedLocationProviderClient fusedLocationClient;
+    private MyLocation myLocation;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -78,8 +88,8 @@ public class MainAppPage extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.setting:
                 Intent intent = new Intent(MainAppPage.this, Settings.class);
-                intent.putExtra("age",ageView.getText().toString());
-                intent.putExtra("bio",aboutMeText.getText().toString());
+                intent.putExtra("age", ageView.getText().toString());
+                intent.putExtra("bio", aboutMeText.getText().toString());
                 startActivity(intent);
                 break;
         }
@@ -97,6 +107,7 @@ public class MainAppPage extends AppCompatActivity {
                     handlUploadImage(bitmap);
             }
         }
+
     }
 
     protected void getDownloadUrl(StorageReference storageReference) {
@@ -166,8 +177,6 @@ public class MainAppPage extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent data = getIntent();
-
-        logout = findViewById(R.id.logout);
         fullName = findViewById(R.id.fullName);
         username = findViewById(R.id.userName);
         ageView = findViewById(R.id.age);
@@ -177,19 +186,19 @@ public class MainAppPage extends AppCompatActivity {
         profileImageView = findViewById(R.id.profilePic);
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         aboutMeText = findViewById(R.id.bio);
-        chatPage = findViewById(R.id.chatPage);
         goToSearch = findViewById(R.id.goToSearch);
         friendProfile = findViewById(R.id.friendProfile);
 
-        chatPage.setOnClickListener(c->{
-            startActivity(new Intent(MainAppPage.this,Chat.class));
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+
+        goToSearch.setOnClickListener(c -> {
+            startActivity(new Intent(MainAppPage.this, SearchForUser.class));
         });
-        goToSearch.setOnClickListener(c->{
-            startActivity(new Intent(MainAppPage.this,SearchForUser.class));
+        friendProfile.setOnClickListener(c -> {
+            startActivity(new Intent(MainAppPage.this, LocationOfTheUser.class));
         });
-        friendProfile.setOnClickListener(c->{
-            startActivity(new Intent(MainAppPage.this,FriendProfile.class));
-        });
+
 
         if (fUser.getPhotoUrl() != null) {
             Picasso.with(this).load(fUser.getPhotoUrl()).into(profileImageView);
@@ -201,11 +210,6 @@ public class MainAppPage extends AppCompatActivity {
             }
         });
 
-
-        logout.setOnClickListener(l -> {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(MainAppPage.this, MainActivity.class));
-        });
 
         userID = firebaseAuth.getUid();
         FirebaseUser checkVerifyUser = firebaseAuth.getCurrentUser();
@@ -253,5 +257,101 @@ public class MainAppPage extends AppCompatActivity {
                 });
             }
         });
+        findLocationAndStoreIt();
+    }
+
+    //this method used to the location permission
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                //abc
+            }else{
+
+            }
+        }
+    }
+    private void findLocationAndStoreIt() {
+        if (ContextCompat.checkSelfPermission(MainAppPage.this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainAppPage.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                new AlertDialog.Builder(this)
+                        .setTitle("Required Location Permission")
+                        .setMessage("You have to give this permission to acess this feature")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ActivityCompat.requestPermissions(MainAppPage.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(MainAppPage.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+
+            // Permission has already been granted
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                // Logic to handle location object
+                                GeoPoint geoPoint = new GeoPoint(location.getLatitude(),location.getLongitude());
+                                myLocation = new MyLocation();
+                                myLocation.setUser(userID);
+                                myLocation.setGeo_point(geoPoint);
+                                myLocation.setTimestamp(null);
+                                saveUserLocation();
+                            }
+                        }
+                    });
+        }
+    }
+    private void saveUserLocation(){
+
+        if(myLocation != null){
+            DocumentReference locationRef = firestore
+                    .collection("Users_Location")
+                    .document(FirebaseAuth.getInstance().getUid());
+
+            locationRef.set(myLocation).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Log.d("TAG", "saveUserLocation: \ninserted user location into database." +
+                                "\n latitude: " + myLocation.getGeo_point().getLatitude() +
+                                "\n longitude: " + myLocation.getGeo_point().getLongitude());
+                    }
+                }
+            });
+        }
     }
 }

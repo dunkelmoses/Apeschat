@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.apeschat.models.UsersData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,6 +58,7 @@ public class Register extends AppCompatActivity {
         signUp = findViewById(R.id.signUp);
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        userID = firebaseAuth.getCurrentUser().getUid();
 
         if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(Register.this, MainAppPage.class));
@@ -69,7 +71,6 @@ public class Register extends AppCompatActivity {
             final String confirmPassword = confirmPasswordEdit.getText().toString();
             final String fullName = fullNameEdit.getText().toString();
             final String username = userNameEdit.getText().toString();
-
             if (email.isEmpty()) {
                 emailEdit.setError("Can not be empty");
             } else if (!email.contains(".")) {
@@ -91,6 +92,9 @@ public class Register extends AppCompatActivity {
                                     verifyUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
+                                            UsersData usersData = new UsersData();
+                                            usersData.setUserID(userID);
+                                            usersData.setEmail(email);
                                             Toast.makeText(Register.this, "Check your email account!",
                                                     Toast.LENGTH_LONG).show();
                                         }
@@ -104,7 +108,6 @@ public class Register extends AppCompatActivity {
 
 
                                     Toast.makeText(Register.this, "Account Created", Toast.LENGTH_LONG).show();
-                                    userID = firebaseAuth.getCurrentUser().getUid();
                                     DocumentReference documentReference = firestore.collection("users").document(userID);
                                     Map<String, Object> userMap = new HashMap<>();
                                     userMap.put(FULL_NAME, fullName);
@@ -124,7 +127,7 @@ public class Register extends AppCompatActivity {
                                     });
                                     startActivity(new Intent(Register.this, MainAppPage.class));
                                 } else {
-                                    Toast.makeText(Register.this, "Error", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Register.this, "Error" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
                                 }
                             }
