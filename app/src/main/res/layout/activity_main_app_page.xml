@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_main"
     tools:context=".MainAppPage">
     <FrameLayout
         android:layout_width="match_parent"
@@ -47,8 +48,8 @@
         android:clickable="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:id="@+id/profilePic"
         android:background="@color/AntiqueWhite"
         />
@@ -60,6 +61,7 @@
         android:textAlignment="center"
         android:textSize="30dp"
         android:hint="Name: "
+
         android:id="@+id/fullName"
         />
     <TextView
@@ -136,7 +138,7 @@
         android:id="@+id/bottomBar"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_bar_menu"
-        android:background="@drawable/bar_colors"
+        android:background="@color/BottomBarBolor"
         app:labelVisibilityMode="unlabeled"
 
         />

@@ -3,7 +3,7 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="backgroundColor">#F7F7F7</color>
+    <color name="backgroundColor">#2a4d69</color>
     <color name="white">#ffffff</color>
     <color name="gray">#efefef</color>
     <color name="White">#FFFFFF</color>
@@ -150,7 +150,8 @@
     <color name="AlgonquinColor">#016237</color>
     <color name="NoButton">#3C3C3C</color>
     <color name="YesButton">#FF7298</color>
-    <color name="BottomBarBolor">#ED6146</color>
+    <color name="BottomBarBolor">#4B86B4</color>
+    <color name="TextColor">#E7EFF6</color>
 
 
 

@@ -104,9 +104,9 @@ public class MainAppPage extends AppCompatActivity {
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                     profileImageView.setImageBitmap(bitmap);
                     handlUploadImage(bitmap);
+
             }
         }
-
     }
 
     protected void getDownloadUrl(StorageReference storageReference) {
@@ -200,7 +200,7 @@ public class MainAppPage extends AppCompatActivity {
 
 
         if (fUser.getPhotoUrl() != null) {
-            Picasso.with(this).load(fUser.getPhotoUrl()).into(profileImageView);
+            Picasso.with(this).load(fUser.getPhotoUrl()).fit().into(profileImageView);
         }
         profileImageView.setOnClickListener(i -> {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -258,25 +258,22 @@ public class MainAppPage extends AppCompatActivity {
         });
         findLocationAndStoreIt();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomBar);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navBottom);
-    }
-    private BottomNavigationView.OnNavigationItemSelectedListener navBottom =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment fragment = null;
-                    switch (item.getItemId()){
-                        case R.id.myProfileIcon:
-                            fragment = new Home_fragment();
-                            break;
-                        case R.id.peopleIcon:
-                            fragment = new People_fragment();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frameFragment,fragment).commit();
-                    return true;
+        bottomNavigationView.setSelectedItemId(R.id.peopleIcon);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.myProfileIcon:
+                        return true;
+                    case R.id.peopleIcon:
+                        startActivity(new Intent(MainAppPage.this,FriendProfile.class));
+                        overridePendingTransition(0,0);
+                        break;
                 }
-            };
+                return true;
+            }
+        });
+    }
 
     //this method used to the location permission
     @Override

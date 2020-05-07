@@ -30,6 +30,7 @@ import javax.annotation.Nullable;
 public class FriendProfile extends AppCompatActivity {
     private Button logout,chat;
     private TextView fullName, username, ageView, verifyMessage, aboutMeText;
+//    private CircleImageView
     private EditText editMyBio;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
@@ -51,8 +52,7 @@ public class FriendProfile extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        chat = findViewById(R.id.chat);
-        logout = findViewById(R.id.logout);
+
         fullName = findViewById(R.id.fullName);
         username = findViewById(R.id.userName);
         ageView = findViewById(R.id.age);
@@ -62,47 +62,47 @@ public class FriendProfile extends AppCompatActivity {
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         aboutMeText = findViewById(R.id.bio);
 
-        logout.setOnClickListener(l -> {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(FriendProfile.this, MainActivity.class));
-        });
-        userID = intent.getStringExtra("userID");
-        chat.setOnClickListener(c->{
-            Intent i = new Intent(FriendProfile.this,Chat.class);
-            i.putExtra("userID",userID);
-            startActivity(i);
-        });
+//        logout.setOnClickListener(l -> {
+//            FirebaseAuth.getInstance().signOut();
+//            startActivity(new Intent(FriendProfile.this, MainActivity.class));
+//        });
+//        userID = intent.getStringExtra("userID");
+//        chat.setOnClickListener(c->{
+//            Intent i = new Intent(FriendProfile.this,Chat.class);
+//            i.putExtra("userID",userID);
+//            startActivity(i);
+//        });
 //        documentReference = firestore.collection("users").document(userID);
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String bio = dataSnapshot.child(Register.BIO).getValue(String.class);
-                String age = dataSnapshot.child(Register.AGE).getValue(String.class);
-                String usernameString = dataSnapshot.child(Register.USERNAME).getValue(String.class);
-                aboutMeText.setText(bio);
-                ageView.setText(age);
-                username.setText(usernameString);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FUCK", databaseError.getMessage());
-            }
-        });
-        DatabaseReference referenceToUser = FirebaseDatabase.getInstance().getReference().child("UsersData").child(userID);
-        referenceToUser.child("username").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String usernameString = dataSnapshot.getValue(String.class);
-                username.setText(usernameString);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FUCK", databaseError.getMessage());
-            }
-        });
+//
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String bio = dataSnapshot.child(Register.BIO).getValue(String.class);
+//                String age = dataSnapshot.child(Register.AGE).getValue(String.class);
+//                String usernameString = dataSnapshot.child(Register.USERNAME).getValue(String.class);
+//                aboutMeText.setText(bio);
+//                ageView.setText(age);
+//                username.setText(usernameString);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.e("FUCK", databaseError.getMessage());
+//            }
+//        });
+//        DatabaseReference referenceToUser = FirebaseDatabase.getInstance().getReference().child("UsersData").child(userID);
+//        referenceToUser.child("username").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String usernameString = dataSnapshot.getValue(String.class);
+//                username.setText(usernameString);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.e("FUCK", databaseError.getMessage());
+//            }
+//        });
     }
 }
