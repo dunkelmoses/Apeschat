@@ -43,14 +43,12 @@ public class Login extends AppCompatActivity {
                                 startActivity(new Intent(Login.this,MainAppPage.class));
                             }
                             else {
-                                Toast.makeText(Login.this,"Error",Toast.LENGTH_LONG).show();
+                                Toast.makeText(Login.this,"Error"+task.toString(),Toast.LENGTH_LONG).show();
 
                             }
                         }
                     });
-
         });
-
         forgotPassword.setOnClickListener(f->{
             startActivity(new Intent(Login.this,ForgotPassword.class));
         });

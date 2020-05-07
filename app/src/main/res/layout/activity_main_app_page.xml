@@ -5,7 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainAppPage">
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBar"
+        android:id="@+id/frameFragment"
+        >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
@@ -119,7 +128,18 @@
         android:layout_alignParentBottom="true"
         android:text="Search"
         />
+</RelativeLayout>
+    </FrameLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/bottomBar"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_bar_menu"
+        android:background="@drawable/bar_colors"
+        app:labelVisibilityMode="unlabeled"
 
+        />
 
 
 </RelativeLayout>

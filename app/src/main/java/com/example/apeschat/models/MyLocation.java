@@ -8,32 +8,35 @@ import java.util.Date;
 public class MyLocation {
 
     private String userId;
-    private GeoPoint geo_point;
+    private String latitude ;
+    private String longitude ;
     private @ServerTimestamp Date timestamp;
 
     public MyLocation() {
     }
 
-    public MyLocation(String userId, GeoPoint geo_point, Date timestamp) {
-        this.userId = userId;
-        this.geo_point = geo_point;
-        this.timestamp = timestamp;
-    }
-
-    public String getUser() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUser(String user) {
-        this.userId = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public GeoPoint getGeo_point() {
-        return geo_point;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public void setGeo_point(GeoPoint geo_point) {
-        this.geo_point = geo_point;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
     public Date getTimestamp() {

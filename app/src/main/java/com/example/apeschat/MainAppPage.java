@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -22,20 +23,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.apeschat.models.MyLocation;
-import com.example.apeschat.models.UsersData;
-import com.firebase.geofire.GeoFire;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -196,7 +195,7 @@ public class MainAppPage extends AppCompatActivity {
             startActivity(new Intent(MainAppPage.this, SearchForUser.class));
         });
         friendProfile.setOnClickListener(c -> {
-            startActivity(new Intent(MainAppPage.this, LocationOfTheUser.class));
+//            startActivity(new Intent(MainAppPage.this, LocationOfTheUser.class));
         });
 
 
@@ -258,7 +257,26 @@ public class MainAppPage extends AppCompatActivity {
             }
         });
         findLocationAndStoreIt();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomBar);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navBottom);
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener navBottom =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment fragment = null;
+                    switch (item.getItemId()){
+                        case R.id.myProfileIcon:
+                            fragment = new Home_fragment();
+                            break;
+                        case R.id.peopleIcon:
+                            fragment = new People_fragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameFragment,fragment).commit();
+                    return true;
+                }
+            };
 
     //this method used to the location permission
     @Override
@@ -324,10 +342,12 @@ public class MainAppPage extends AppCompatActivity {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
                                 // Logic to handle location object
-                                GeoPoint geoPoint = new GeoPoint(location.getLatitude(),location.getLongitude());
+                                String latitude = String.valueOf(location.getLatitude());
+                                String longitude = String.valueOf(location.getLongitude());
                                 myLocation = new MyLocation();
-                                myLocation.setUser(userID);
-                                myLocation.setGeo_point(geoPoint);
+                                myLocation.setUserId(userID);
+                                myLocation.setLatitude(latitude);
+                                myLocation.setLongitude(longitude);
                                 myLocation.setTimestamp(null);
                                 saveUserLocation();
                             }
@@ -346,12 +366,11 @@ public class MainAppPage extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
-                        Log.d("TAG", "saveUserLocation: \ninserted user location into database." +
-                                "\n latitude: " + myLocation.getGeo_point().getLatitude() +
-                                "\n longitude: " + myLocation.getGeo_point().getLongitude());
+                     Log.d("Latitude: ",myLocation.getLatitude() + "Longitude: "+myLocation.getLongitude());
                     }
                 }
             });
         }
     }
+
 }

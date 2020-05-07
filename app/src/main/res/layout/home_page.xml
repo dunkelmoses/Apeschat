@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    >
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolBar"
+        />
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="match_parent"
+        android:layout_height="366dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/toolBar"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/bob1"
+        android:background="@drawable/image_boreder"
+        android:padding="1dp"/>
+    <TextView
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/myName"
+        android:layout_below="@+id/profileImage"
+        android:hint="Name"
+        android:textSize="22dp"
+        />
+    <TextView
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/myAge"
+        android:hint="29"
+        android:textSize="22dp"
+        android:layout_below="@+id/profileImage"
+        android:layout_toRightOf="@+id/myName"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/myBio"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_below="@+id/myName"
+        android:hint="bio"
+        android:textSize="13dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/myDist"
+        android:layout_below="@+id/myName"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="40dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:id="@+id/noButton"
+            android:clickable="true"
+            android:src="@drawable/nothanks"
+            android:layout_below="@+id/myBio"
+
+            />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginRight="50dp"
+        android:layout_width="110dp"
+        android:layout_marginTop="40dp"
+        android:layout_height="110dp"
+        android:id="@+id/yesButton"
+        android:src="@drawable/yesplease"
+        android:clickable="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/myBio"
+        />
+
+</RelativeLayout>
