@@ -23,5 +23,10 @@
     <string name="Done">Done</string>
     <string name="Age">"Age: "</string>
     <string name="addMe">Add</string>
+    <string name="hello_world">Hello world</string>
+    <string name="Sex">Sex</string>
+    <string name="Male">male</string>
+    <string name="LookingFor">"Looking For: "</string>
+    <string name="Bio">Bio: </string>
 
 </resources>

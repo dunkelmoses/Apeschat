@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "817270507235",
-    "firebase_url": "https://apeschat-96b65.firebaseio.com",
-    "project_id": "apeschat-96b65",
-    "storage_bucket": "apeschat-96b65.appspot.com"
+    "project_number": "1048899275239",
+    "firebase_url": "https://apeschat-c9d58.firebaseio.com",
+    "project_id": "apeschat-c9d58",
+    "storage_bucket": "apeschat-c9d58.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:817270507235:android:43f546a90dd665faa6e7d6",
+        "mobilesdk_app_id": "1:1048899275239:android:75687155ffa5b5139e5542",
         "android_client_info": {
           "package_name": "com.example.apeschat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "817270507235-p2t27ffg1h9omg2ma30i8qrombkfu1gm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.apeschat",
-            "certificate_hash": "bbd4dc0cdf0029c56a9d865e976e2ab7ec5f30cc"
-          }
-        },
-        {
-          "client_id": "817270507235-snnc985dpdtsp7e1t2u1g4rsp1p5dn7f.apps.googleusercontent.com",
+          "client_id": "1048899275239-89pp44r44g0vuu4r9s3kcb0upuou5lvf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAMBHD8MLe19Uudn57UcTNxHaEwtYRzZ6E"
+          "current_key": "AIzaSyCgqIqkTg6pcO5NcMlnAQcXhPeEkBMhuik"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "817270507235-snnc985dpdtsp7e1t2u1g4rsp1p5dn7f.apps.googleusercontent.com",
+              "client_id": "1048899275239-89pp44r44g0vuu4r9s3kcb0upuou5lvf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+   <de.hdodenhof.circleimageview.CircleImageView
+       android:layout_width="160dp"
+       android:layout_height="160dp"
+       android:id="@+id/iconProfileList"
+       android:src="@drawable/heart2"
+       android:layout_marginTop="5dp"
+       android:layout_marginRight="20dp"
+       />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nameUserList"
+        android:text="Name"
+        android:textSize="40dp"
+        android:layout_toRightOf="@+id/iconProfileList"
+        android:layout_marginTop="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ageUserList"
+        android:text="age"
+        android:textSize="20dp"
+        android:layout_toRightOf="@+id/iconProfileList"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/nameUserList"
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/likeButton"
+        android:src="@drawable/heart2"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ageUserList"
+        android:layout_marginLeft="5dp"
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/dislikeButton"
+        android:src="@drawable/x2"
+        android:layout_below="@+id/ageUserList"
+        android:layout_toLeftOf="@+id/likeButton"
+        />
+
+</RelativeLayout>

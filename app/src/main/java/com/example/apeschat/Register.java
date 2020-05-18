@@ -33,11 +33,10 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
-    private EditText fullNameEdit, userNameEdit, emailEdit, passwordEdit, confirmPasswordEdit;
+    private EditText emailEdit, passwordEdit, confirmPasswordEdit;
     private Button signUp;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
-    private String userID;
     public static final String FULL_NAME = "fullName";
     public static final String EMAIL = "email";
     public static final String USERNAME = "username";
@@ -50,27 +49,27 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_rigester);
-        fullNameEdit = findViewById(R.id.fullNameEdit);
-        userNameEdit = findViewById(R.id.userNameEdit);
+//        fullNameEdit = findViewById(R.id.fullNameEdit);
+//        userNameEdit = findViewById(R.id.userNameEdit);
         emailEdit = findViewById(R.id.emailEdit);
         passwordEdit = findViewById(R.id.passwordEdit);
         confirmPasswordEdit = findViewById(R.id.confirmPasswordEdit);
         signUp = findViewById(R.id.signUp);
+
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-        userID = firebaseAuth.getCurrentUser().getUid();
 
-        if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(Register.this, MainAppPage.class));
-        }
+//        if (firebaseAuth.getCurrentUser() != null) {
+//            startActivity(new Intent(Register.this, MainAppPage.class));
+//        }
 
 
         signUp.setOnClickListener(s -> {
             final String email = emailEdit.getText().toString().trim();
             final String password = passwordEdit.getText().toString();
             final String confirmPassword = confirmPasswordEdit.getText().toString();
-            final String fullName = fullNameEdit.getText().toString();
-            final String username = userNameEdit.getText().toString();
+//            final String fullName = fullNameEdit.getText().toString();
+//            final String username = userNameEdit.getText().toString();
             if (email.isEmpty()) {
                 emailEdit.setError("Can not be empty");
             } else if (!email.contains(".")) {
@@ -92,11 +91,10 @@ public class Register extends AppCompatActivity {
                                     verifyUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            UsersData usersData = new UsersData();
-                                            usersData.setUserID(userID);
-                                            usersData.setEmail(email);
-                                            Toast.makeText(Register.this, "Check your email account!",
-                                                    Toast.LENGTH_LONG).show();
+//                                            UsersData usersData = new UsersData();
+//                                            usersData.setUserID(firebaseAuth.getCurrentUser().getUid());
+//                                            Toast.makeText(Register.this, "Check your email account!",
+//                                                    Toast.LENGTH_LONG).show();
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -108,27 +106,21 @@ public class Register extends AppCompatActivity {
 
 
                                     Toast.makeText(Register.this, "Account Created", Toast.LENGTH_LONG).show();
-                                    DocumentReference documentReference = firestore.collection("users").document(userID);
+                                    DocumentReference documentReference = firestore.collection("users").document(firebaseAuth.getCurrentUser().getUid());
                                     Map<String, Object> userMap = new HashMap<>();
-                                    userMap.put(FULL_NAME, fullName);
                                     userMap.put(EMAIL, email);
-                                    userMap.put(USERNAME, username);
-                                    userMap.put(USER_ID, userID);
+                                    userMap.put(USER_ID, firebaseAuth.getCurrentUser().getUid());
                                     //These two lines create a table with the user id and it has one column which is the username
-                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UsersData");
-                                    reference.child(userID).child("username").setValue(username);
-                                    reference.child(userID).child("userID").setValue(userID);
 
                                     documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.d("TAG", "created new data: " + userID);
+                                            Log.d("TAG", "created new data: " + firebaseAuth.getCurrentUser().getUid());
                                         }
                                     });
-                                    startActivity(new Intent(Register.this, MainAppPage.class));
+                                    startActivity(new Intent(Register.this, Name_Age.class));
                                 } else {
                                     Toast.makeText(Register.this, "Error" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {

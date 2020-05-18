@@ -3,9 +3,10 @@
     package="com.example.apeschat">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,6 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Test"></activity>
+        <activity android:name=".ChatList" />
+        <activity android:name=".ListUsers" />
+        <activity android:name=".MyProfile" />
+        <activity android:name=".Name_Age" />
+        <activity android:name=".SwipeClass" />
         <activity android:name=".FriendProfile" />
         <activity android:name=".SearchForUser" />
         <activity android:name=".Chat" />
@@ -24,6 +31,7 @@
         <activity android:name=".MainAppPage" />
         <activity android:name=".Login" />
         <activity android:name=".Register" />
+        <activity android:name=".Home_fragment" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +39,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
     </application>
 
 </manifest>

@@ -16,12 +16,7 @@
             android:id="@+id/toolBar"
             layout="@layout/toolbar" />
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="45dp"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="5dp"
-            android:src="@drawable/logo" />
+
 
         <TextView
             android:id="@+id/verifyMessage"
@@ -31,14 +26,15 @@
             android:layout_centerHorizontal="true"
             android:clickable="true"
             android:text="@string/VerifyMessage"
-            android:visibility="visible" />
+            android:layout_marginBottom="5dp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePic"
-        android:layout_width="320dp"
-        android:layout_height="320dp"
+        android:layout_width="270dp"
+        android:layout_height="270dp"
         android:layout_below="@+id/relativeBar"
         android:layout_centerHorizontal="true"
         android:src="@drawable/heart2" />
@@ -50,22 +46,26 @@
         android:layout_below="@+id/profilePic"
         android:layout_centerHorizontal="true"
         android:hint="Name: "
+        android:textColor="@color/TextCol"
         android:textAlignment="center"
-        android:textSize="30dp" />
-
+        android:textSize="30dp"
+        android:textStyle="bold"/>
     <TextView
-        android:id="@+id/userName"
+        android:id="@+id/city"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fullName"
         android:layout_centerHorizontal="true"
+        android:hint="city"
         android:textAlignment="center" />
 
     <TextView
+        android:textSize="15dp"
         android:id="@+id/age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fullName"
+        android:layout_below="@+id/city"
         android:layout_centerHorizontal="true"
         android:hint="Age: "
         android:layout_marginBottom="20dp"
@@ -79,6 +79,8 @@
         android:src="@drawable/settingsicon"
         android:layout_alignParentRight="true"
         android:layout_marginRight="80dp"
+        android:layout_above="@+id/aboutMe"
+
 
         />
     <ImageView
@@ -89,6 +91,8 @@
         android:src="@drawable/editicon"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
+        android:layout_above="@+id/aboutMe"
+
         />
     <ImageView
         android:layout_width="60dp"
@@ -97,6 +101,7 @@
         android:layout_below="@+id/age"
         android:src="@drawable/exclamation"
         android:layout_marginLeft="80dp"
+        android:layout_above="@+id/aboutMe"
         />
 
     <TextView
@@ -104,8 +109,11 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_above="@+id/bottomBar"
-        android:background="@color/gray"
-        android:text="@string/AboutMe"
+        android:background="@drawable/image_boreder"
+        android:text="about me about me about me about me about me about me about me about me about me abou"
+        android:paddingTop="5dp"
+        android:paddingRight="19dp"
+        android:paddingLeft="19dp"
         android:textSize="18dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -115,6 +123,8 @@
         android:layout_alignParentBottom="true"
         android:background="@color/BottomBarBolor"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_bar_menu" />
+        app:menu="@menu/bottom_bar_menu"
+        app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
+        app:itemTextColor="@drawable/bottom_nav_icon_color_selector"/>
 
 </RelativeLayout>

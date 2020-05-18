@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SwipeClass">
+
+  <com.lorentzos.flingswipe.SwipeFlingAdapterView
+      android:id="@+id/frame"
+      android:background="#ffeee9e2"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:rotation_degrees="15.5"
+      />
+
+<!--    <include layout="@layout/buttons" />-->
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:id="@+id/bottomBar"
+      android:layout_alignParentBottom="true"
+      app:menu="@menu/bottom_bar_menu"
+      android:background="@color/BottomBarBolor"
+      app:labelVisibilityMode="unlabeled"
+      app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
+      app:itemTextColor="@drawable/bottom_nav_icon_color_selector"
+      />
+</RelativeLayout>

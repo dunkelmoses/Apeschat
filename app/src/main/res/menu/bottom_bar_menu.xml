@@ -14,7 +14,7 @@
     <item
         android:icon="@drawable/chat"
         android:title=""
-        android:id="@+id/Chat"
+        android:id="@+id/chatIcon"
 
         />
 </menu>

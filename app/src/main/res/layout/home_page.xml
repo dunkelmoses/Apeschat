@@ -1,112 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    android:layout_height="wrap_content"
+
     >
 
-    <include
-        layout="@layout/toolbar"
-        android:id="@+id/toolBar"
-        />
-    <ImageView
-        android:paddingTop="5dp"
-        android:layout_centerHorizontal="true"
-        android:layout_width="49dp"
-        android:layout_height="55dp"
-        android:src="@drawable/logo4"
-        />
+
     <ImageView
         android:id="@+id/profileImage"
-        android:layout_width="match_parent"
-        android:layout_height="366dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/toolBar"
-        android:src="@drawable/bob1"
-        />
-    <TextView
-        android:layout_marginRight="8dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/image_boreder"
+        android:src="@drawable/bob1" />
+
+    <TextView
         android:id="@+id/myName"
-        android:layout_below="@+id/profileImage"
-        android:hint="Name"
-        android:textSize="27dp"
-        android:textColor="@color/TextColor"
-
-        />
-    <TextView
-        android:textColor="@color/TextColor"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="3dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toRightOf="@+id/profileImage"
+        android:text="Name"
+        android:textColor="@color/Red"
+        android:textSize="27dp"
+
+        />
+
+    <TextView
         android:id="@+id/myAge"
-        android:hint="29"
-        android:textSize="27dp"
-        android:layout_below="@+id/profileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="8dp"
         android:layout_toRightOf="@+id/myName"
-        />
+        android:text="29"
+        android:textColor="@color/Red"
+        android:textSize="27dp" />
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:id="@+id/myBio"-->
+    <!--        android:layout_marginLeft="8dp"-->
+    <!--        android:layout_marginRight="8dp"-->
+    <!--        android:layout_below="@+id/myName"-->
+    <!--        android:hint="bio"-->
+    <!--        android:textColor="@color/TextCol"-->
+    <!--        android:textSize="15dp"-->
+    <!--        />-->
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/myBio"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_below="@+id/myName"
-        android:hint="bio"
-        android:textColor="@color/TextColor"
-        android:textSize="15dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/myDist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/myName"
-        android:layout_alignParentRight="true"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:textSize="15dp"
+        android:layout_toRightOf="@+id/profileImage"
         android:hint="28 km"
-        android:textColor="@color/TextColor"
+
+        android:textColor="@color/TextCol"
+        android:textSize="15dp"
 
         />
 
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="40dp"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:id="@+id/noButton"
-            android:clickable="true"
-            android:src="@drawable/x2"
-            android:layout_below="@+id/myBio"
-
-            />
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_marginRight="50dp"
-        android:layout_width="110dp"
-        android:layout_marginTop="40dp"
-        android:layout_height="110dp"
-        android:id="@+id/yesButton"
-        android:src="@drawable/heart2"
-        android:clickable="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/myBio"
-        />
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/bottomBar"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_bar_menu"
-        android:background="@color/BottomBarBolor"
-        app:labelVisibilityMode="unlabeled"
-
-        />
 
 </RelativeLayout>

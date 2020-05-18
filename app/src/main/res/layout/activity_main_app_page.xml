@@ -140,7 +140,8 @@
         app:menu="@menu/bottom_bar_menu"
         android:background="@color/BottomBarBolor"
         app:labelVisibilityMode="unlabeled"
-
+        app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
+        app:itemTextColor="@drawable/bottom_nav_icon_color_selector"
         />
 
 

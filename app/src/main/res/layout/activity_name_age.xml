@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditProfile"
+    tools:context=".Name_Age"
     android:orientation="vertical"
     android:paddingTop="50dp"
     android:paddingLeft="70dp"
@@ -21,6 +21,7 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/addimage"
         android:layout_marginBottom="20dp"
+        android:scaleType="centerCrop"
         />
 
 
@@ -45,10 +46,6 @@
         android:layout_gravity="left"
         android:background="@drawable/image_boreder"
         android:inputType="text"
-        android:padding="5dp"
-        android:textColor="#3C3C3C"
-        android:textSize="15dp"
-
         android:layout_below="@+id/name"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -79,10 +76,6 @@
         android:layout_gravity="left"
         android:background="@drawable/image_boreder"
         android:inputType="number"
-        android:padding="5dp"
-        android:textColor="#3C3C3C"
-        android:textSize="15dp"
-
         android:layout_below="@+id/myAge"
         />
     <View
@@ -94,52 +87,104 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bio"
-        android:text="@string/Bio"
+        android:id="@+id/sex"
+        android:text="@string/Sex"
         android:textSize="11dp"
+        android:layout_below="@id/view2"
         android:textColor="#4B86B4"
-        android:layout_below="@+id/view2"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         />
-    <EditText
+    <RadioGroup
+        android:id="@+id/groupSex"
+        android:gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true"
+
+
+        android:layout_below="@id/sex"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:id="@+id/bioEdit"
-        android:layout_gravity="left"
-        android:background="@drawable/border10"
-        android:inputType="textMultiLine"
-        android:text=""
-        android:textSize="15dp"
-       android:padding="5dp"
-        android:textColor="#3C3C3C"
-        android:layout_below="@+id/bio"
+        android:layout_height="27dp" >
+        <RadioButton
+            android:id="@+id/maleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:textColor="#5A5A5A"
+            android:onClick="sexChoice"
+
+            android:text="Male" />
+        <View
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            />
+        <RadioButton
+            android:id="@+id/femaleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:textColor="#5A5A5A"
+            android:onClick="sexChoice"
+
+            android:text="Female" />
+    </RadioGroup>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lookingFor"
+        android:text="@string/LookingFor"
+        android:textSize="11dp"
+        android:layout_below="@id/groupSex"
+        android:textColor="#4B86B4"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:maxLength="140"
-
         />
-    <View
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:id="@+id/view3"
-        android:layout_below="@+id/bioEdit"
-        />
+    <RadioGroup
+        android:id="@+id/groupLookingFor"
+        android:gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/lookingFor"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="27dp" >
+        <RadioButton
+            android:id="@+id/maleLookingFor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:textColor="#5A5A5A"
+            android:onClick="lookingForChoice"
+            android:text="Male" />
+        <View
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            />
+        <RadioButton
+            android:id="@+id/femaleLookingFor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5A5A5A"
+            android:textSize="10dp"
+            android:onClick="lookingForChoice"
+            android:text="Female" />
+    </RadioGroup>
 
-
-
-
-
-
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/done"
-        android:text="@string/Done"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/signupselecter"
-        />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/done"
+            android:text="@string/Done"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/signupselecter"
+            />
 
 
 

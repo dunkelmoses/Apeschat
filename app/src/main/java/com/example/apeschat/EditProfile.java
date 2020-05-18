@@ -9,73 +9,95 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class EditProfile extends AppCompatActivity {
-    private EditText aboutMeEdit, ageEdit;
+    private EditText bioEdit, ageEdit, nameEdit;
     private Button done;
-    private SharedPreferences prefs = null;
-
+    private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        Intent intent2 = getIntent();
-        String ageData = intent2.getStringExtra("age");
-        String aboutMeData = intent2.getStringExtra("bio");
-
-        aboutMeEdit = findViewById(R.id.aboutMeEdit);
-        ageEdit = findViewById(R.id.ageEdit);
-        aboutMeEdit.setText(aboutMeData);
-        ageEdit.setText(ageData);
+        nameEdit = findViewById(R.id.nameEdit);
+        ageEdit = findViewById(R.id.myAgeEdit);
+        bioEdit = findViewById(R.id.bioEdit);
+        imageView = findViewById(R.id.profilePic);
         done = findViewById(R.id.done);
+        String userUid = FirebaseAuth.getInstance().getUid();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference refForGender = FirebaseDatabase.getInstance().getReference("Gender").child(userUid);
+        refForGender.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String gender = dataSnapshot.getValue(String.class);
+                done.setOnClickListener(d -> {
+                    reference.child("user_data").child(gender).child(userUid).child("name")
+                            .setValue(nameEdit.getText().toString());
+                    reference.child("user_data").child(gender).child(userUid).child("age")
+                            .setValue(ageEdit.getText().toString());
+                    reference.child("user_data").child(gender).child(userUid).child("bio")
+                            .setValue(bioEdit.getText().toString());
+                    startActivity(new Intent(EditProfile.this,MyProfile.class));
+                });
+                Log.d("TAG","GENDER IS "+ gender);
+            }
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        done.setOnClickListener(d -> {
+            }
+        });
 
-            Intent intent = new Intent(EditProfile.this, MainAppPage.class);
-            String sendDataAge = ageEdit.getText().toString();
-            String sendDataAboutMe = aboutMeEdit.getText().toString();
+    }
 
-            intent.putExtra("age", sendDataAge);
-            intent.putExtra("bio", sendDataAboutMe);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String userUdi = FirebaseAuth.getInstance().getUid();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("Gender").child(userUdi).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String s = dataSnapshot.getValue(String.class);
+                reference.child("user_data").child(s).child(userUdi).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String sName = dataSnapshot.child("name").getValue(String.class);
+                        String sAge = dataSnapshot.child("age").getValue(String.class);
+                        String sImage = dataSnapshot.child("image").getValue(String.class);
+                        String sBio = dataSnapshot.child("bio").getValue(String.class);
+                        nameEdit.setText(sName);
+                        ageEdit.setText(sAge);
+                        bioEdit.setText(sBio);
+                        Picasso.get().load(sImage).into(imageView);
+                        Log.d("TAG", "NAME: " + s);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            String userID = firebaseAuth.getUid();
-            reference.child(userID).child("age").setValue(sendDataAge);
-            reference.child(userID).child("bio").setValue(sendDataAboutMe).
+                    }
+                });
+                Log.d("TAG","WHAT:"+s);
 
-                    addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(EditProfile.this, "Sent", Toast.LENGTH_LONG).show();
-                        }
-                    }).
-                    addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(EditProfile.this, "did not send", Toast.LENGTH_LONG).show();
-                            Log.e("onFailure", e.getMessage());
-                        }
-                    });
-            startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
     }
 }

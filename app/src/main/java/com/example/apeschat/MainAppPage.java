@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -68,13 +67,13 @@ public class MainAppPage extends AppCompatActivity {
     private FirebaseUser fUser;
     private DocumentReference documentReference;
     private String userID;
-    private ImageView profileImageView;
-    public final int IMAGE_CODE = 1001;
     public final String ON_SUCCESS = "ON_SUCCESS";
     public final String ON_FAILURE = "ON_FAILURE";
     public GeoPoint geoPoint;
     public FusedLocationProviderClient fusedLocationClient;
     private MyLocation myLocation;
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -82,90 +81,26 @@ public class MainAppPage extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.setting:
-                Intent intent = new Intent(MainAppPage.this, Settings.class);
-                intent.putExtra("age", ageView.getText().toString());
-                intent.putExtra("bio", aboutMeText.getText().toString());
-                startActivity(intent);
-                break;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.setting:
+//                Intent intent = new Intent(MainAppPage.this, Settings.class);
+//                intent.putExtra("age", ageView.getText().toString());
+//                intent.putExtra("bio", aboutMeText.getText().toString());
+//                startActivity(intent);
+//                break;
+//        }
+//        return true;
+//    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IMAGE_CODE) {
-            switch (resultCode) {
-                case RESULT_OK:
-                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    profileImageView.setImageBitmap(bitmap);
-                    handlUploadImage(bitmap);
 
-            }
-        }
-    }
 
-    protected void getDownloadUrl(StorageReference storageReference) {
-        storageReference.getDownloadUrl()
-                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Log.d(ON_SUCCESS, "This is URI: " + uri);
-                        setUserImageUri(uri);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e(ON_FAILURE, "The exception is: " + e.getMessage());
 
-            }
-        });
-    }
 
-    protected void setUserImageUri(Uri uri) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                .setPhotoUri(uri)
-                .build();
-        user.updateProfile(request)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MainAppPage.this, "Good", Toast.LENGTH_LONG).show();
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainAppPage.this, "Failed", Toast.LENGTH_LONG).show();
 
-            }
-        });
-    }
 
-    private void handlUploadImage(Bitmap bitmap) {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Profile.Images")
-                .child(uid + "jpeg");
-        storageReference.putBytes(byteArrayOutputStream.toByteArray())
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        getDownloadUrl(storageReference);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,7 +117,6 @@ public class MainAppPage extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         verifyMessage = findViewById(R.id.verifyMessage);
-        profileImageView = findViewById(R.id.profilePic);
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         aboutMeText = findViewById(R.id.bio);
         goToSearch = findViewById(R.id.goToSearch);
@@ -199,15 +133,7 @@ public class MainAppPage extends AppCompatActivity {
         });
 
 
-        if (fUser.getPhotoUrl() != null) {
-            Picasso.with(this).load(fUser.getPhotoUrl()).fit().into(profileImageView);
-        }
-        profileImageView.setOnClickListener(i -> {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(intent, IMAGE_CODE);
-            }
-        });
+
 
 
         userID = firebaseAuth.getUid();
@@ -258,15 +184,16 @@ public class MainAppPage extends AppCompatActivity {
         });
         findLocationAndStoreIt();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomBar);
-        bottomNavigationView.setSelectedItemId(R.id.peopleIcon);
+        bottomNavigationView.setSelectedItemId(R.id.myProfileIcon);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.myProfileIcon:
+
                         return true;
                     case R.id.peopleIcon:
-                        startActivity(new Intent(MainAppPage.this,FriendProfile.class));
+                        startActivity(new Intent(MainAppPage.this,ListUsers.class));
                         overridePendingTransition(0,0);
                         break;
                 }

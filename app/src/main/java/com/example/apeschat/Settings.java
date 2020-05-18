@@ -87,14 +87,7 @@ public class Settings extends AppCompatActivity {
                         Toast.makeText(Settings.this, "this is 1" + position, Toast.LENGTH_LONG).show();
                         break;
                     case 2:
-                        Intent intent1 = getIntent();
-                        String ageData = intent1.getStringExtra("age");
-                        String bioData = intent1.getStringExtra("bio");
-
-                        Intent intent2 = new Intent(Settings.this, EditProfile.class);
-                        intent2.putExtra("age", ageData);
-                        intent2.putExtra("bio", bioData);
-                        startActivity(intent2);
+                        startActivity(new Intent(Settings.this, EditProfile.class));
                         break;
                     case 3:
                         startActivity(new Intent(Settings.this,About.class));
