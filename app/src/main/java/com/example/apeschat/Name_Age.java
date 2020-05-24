@@ -34,9 +34,9 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
+import java.util.UUID;
 
 public class Name_Age extends AppCompatActivity {
-    private static final int GALLERY_PICK = 2;
     private EditText name, age;
     private Button done;
     private RadioGroup sexGroup, lookingForGroup;
@@ -44,7 +44,6 @@ public class Name_Age extends AppCompatActivity {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     public final int IMAGE_CODE = 1001;
-    private ImageView profileImageView;
     public final String ON_SUCCESS = "ON_SUCCESS";
     public final String ON_FAILURE = "ON_FAILURE";
     private String genderString, lookingFor;
@@ -59,7 +58,6 @@ public class Name_Age extends AppCompatActivity {
         name = findViewById(R.id.nameEdit);
         age = findViewById(R.id.myAgeEdit);
         done = findViewById(R.id.done);
-        profileImageView = findViewById(R.id.profilePic);
         sexGroup = findViewById(R.id.groupSex);
         lookingForGroup = findViewById(R.id.groupLookingFor);
 
@@ -104,22 +102,13 @@ public class Name_Age extends AppCompatActivity {
             }
         });
 //        if (genderString!=null || genderString.isEmpty()) {
-            profileImageView.setOnClickListener(i -> {
-//            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            if (intent.resolveActivity(getPackageManager()) != null) {
-//                startActivityForResult(intent, IMAGE_CODE);
-//            }
-                Intent gallery = new Intent();
-                gallery.setType("image/*");
-                gallery.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(gallery, GALLERY_PICK);
-            });
+
 //        }
 //        else {
 //            Toast.makeText(this, "Choose a gender first", Toast.LENGTH_SHORT).show();
 //        }
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user_data");
-        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("Gender");
+//        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("Gender");
         done.setOnClickListener(d -> {
             if (genderString.isEmpty() || lookingFor.isEmpty()) {
                 Toast.makeText(this, "You must select a gender", Toast.LENGTH_SHORT).show();
@@ -131,63 +120,21 @@ public class Name_Age extends AppCompatActivity {
                 cardsModel.setAge(sAge);
                 cardsModel.setGender(genderString);
                 cardsModel.setLookingFor(lookingFor);
-                cardsModel.setImage(imageUrl);
+                cardsModel.setImage("");
                 cardsModel.setBio("");
-                reference2.child(FirebaseAuth.getInstance().getUid()).setValue(genderString);
-                reference.child(genderString).child(FirebaseAuth.getInstance().getUid()).setValue(cardsModel);
-                Intent intent = new Intent(Name_Age.this, MyProfile.class);
+                cardsModel.setId(FirebaseAuth.getInstance().getUid());
+//                reference2.child(FirebaseAuth.getInstance().getUid()).setValue(genderString);
+                reference.child(FirebaseAuth.getInstance().getUid()).setValue(cardsModel);
+                Intent intent = new Intent(Name_Age.this, AddProfileImage.class);
+//                intent.putExtra("gender",genderString);
                 startActivity(intent);
             }
         });
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK && data != null) {
-            Uri uri = data.getData();
-            CropImage.activity(uri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1, 1)
-                    .start(this);
 
-        }
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-                final String[] imageUrl = {resultUri.toString()};
-                profileImageView.setImageURI(resultUri);
-
-                StorageReference reference = storageReference.child("Images").child(FirebaseAuth.getInstance().getUid() + ".jpg");
-                reference.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    imageUrl[0] = resultUri.toString();
-                                    DatabaseReference reference = FirebaseDatabase.getInstance()
-                                            .getReference("user_data")
-                                            .child(genderString)
-                                            .child(FirebaseAuth.getInstance().getUid())
-                                            .child("image");
-                                    reference.setValue(imageUrl[0]);
-                                    Log.d("TAG", "This is Image: " + imageUrl[0]);
-                                }
-                            });
-                            Toast.makeText(Name_Age.this, "Image Added", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-            }
-        }
-    }
 
 
     public void lookingForChoice(View view) {

@@ -12,23 +12,10 @@
     android:paddingBottom="15dp"
     >
 
-    <ImageView
-        android:layout_gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/profilePic"
-        android:background="@drawable/image_boreder"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/addimage"
-        android:layout_marginBottom="20dp"
-        android:scaleType="centerCrop"
-        />
-
-
-
 
 
     <TextView
+        android:layout_marginTop="140dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/name"

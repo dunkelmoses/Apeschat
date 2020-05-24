@@ -11,18 +11,24 @@
     android:paddingRight="70dp"
     android:paddingBottom="15dp"
     >
+    <androidx.cardview.widget.CardView
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        app:cardElevation="0dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/cardView1"
+        app:cardCornerRadius="40dp">
 
     <ImageView
-        android:layout_gravity="center"
-        android:layout_width="150dp"
+        android:cropToPadding="true"
+        android:layout_width="100dp"
         android:layout_height="150dp"
         android:id="@+id/profilePic"
-        android:background="@drawable/image_boreder"
         android:layout_centerHorizontal="true"
         android:src="@drawable/addimage"
         android:layout_marginBottom="20dp"
         />
-
+    </androidx.cardview.widget.CardView>
 
 
 
@@ -34,7 +40,7 @@
         android:text="@string/FullName"
         android:textSize="11dp"
         android:textColor="#4B86B4"
-        android:layout_below="@+id/profilePic"
+        android:layout_below="@+id/cardView1"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         />
@@ -109,8 +115,9 @@
         android:layout_gravity="left"
         android:background="@drawable/border10"
         android:inputType="textMultiLine"
-        android:text=""
         android:textSize="15dp"
+        android:gravity="start"
+        android:paddingTop="5dp"
        android:padding="5dp"
         android:textColor="#3C3C3C"
         android:layout_below="@+id/bio"

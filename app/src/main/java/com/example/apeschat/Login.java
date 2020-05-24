@@ -40,7 +40,7 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
-                                startActivity(new Intent(Login.this,MainAppPage.class));
+                                startActivity(new Intent(Login.this,MyProfile.class));
                             }
                             else {
                                 Toast.makeText(Login.this,"Error"+task.toString(),Toast.LENGTH_LONG).show();

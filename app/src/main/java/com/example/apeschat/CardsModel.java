@@ -1,26 +1,38 @@
 package com.example.apeschat;
 
-import android.net.Uri;
-import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CardsModel {
-    private String name, age, gender, lookingFor,bio;
-    private String image;
-
+    private String name, age, gender, lookingFor, bio, id, image;
+    private CardsModel user;
     public CardsModel() {
     }
 
-    public CardsModel(String name, String age, String gender, String lookingFor, String bio, String image) {
+    public CardsModel(String name, String age, String gender, String lookingFor, String bio, String id, String image) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.lookingFor = lookingFor;
         this.bio = bio;
+        this.id = id;
         this.image = image;
+    }
+
+    public CardsModel getUser() {
+        return user;
+    }
+
+    public void setUser(CardsModel user) {
+        this.user = user;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

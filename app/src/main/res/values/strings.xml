@@ -28,5 +28,11 @@
     <string name="Male">male</string>
     <string name="LookingFor">"Looking For: "</string>
     <string name="Bio">Bio: </string>
+    <string name="AddImage">Your Profile Image</string>
+    <string name="Messages">Messages:</string>
+    <string name="Matches">matches:</string>
+    <string name="YouHaveSeen">You Have Seen Everyone.\n
+                                Come Back Later.</string>
+    <string name="TryAgainLater"></string>
 
 </resources>

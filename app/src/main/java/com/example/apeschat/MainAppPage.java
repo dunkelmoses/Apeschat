@@ -193,8 +193,8 @@ public class MainAppPage extends AppCompatActivity {
 
                         return true;
                     case R.id.peopleIcon:
-                        startActivity(new Intent(MainAppPage.this,ListUsers.class));
-                        overridePendingTransition(0,0);
+//                        startActivity(new Intent(MainAppPage.this,ListUsers.class));
+//                        overridePendingTransition(0,0);
                         break;
                 }
                 return true;

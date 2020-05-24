@@ -50,7 +50,7 @@ public class Settings extends AppCompatActivity {
 
     public class MyOwnAdapter extends BaseAdapter {
         String[] data = new String[]{
-                "Change Password", "Change Username", "Change Bio", "About" , "Logout"
+                "Change Password", "Change Username", "Edit Profile", "About" , "Logout"
         };
 
         @Override

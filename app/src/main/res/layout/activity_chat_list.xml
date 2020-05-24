@@ -5,9 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChatList">
+
+   <include
+       layout="@layout/toolbar"
+       android:id="@+id/toolBar"
+       />
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_marginLeft="5dp"
+       android:layout_height="wrap_content"
+       android:text="@string/Matches"
+       android:textSize="10dp"
+       android:textColor="@color/backgroundColor"
+       android:layout_below="@+id/toolBar"
+       android:id="@+id/messagesTextView"
+       />
    <androidx.recyclerview.widget.RecyclerView
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+       android:layout_height="match_parent"
        android:id="@+id/chat_list_recycler"
+       android:layout_below="@+id/messagesTextView"
+       />
+<!--   <ListView-->
+<!--       android:layout_width="match_parent"-->
+<!--       android:layout_height="wrap_content"-->
+<!--       android:id="@+id/listview"-->
+<!--       android:layout_below="@+id/messagesTextView"-->
+<!--       android:layout_above="@+id/bottomBar"-->
+<!--      />-->
+   <com.google.android.material.bottomnavigation.BottomNavigationView
+       android:layout_width="match_parent"
+       android:layout_height="40dp"
+       android:id="@+id/bottomBar"
+       android:layout_alignParentBottom="true"
+       app:menu="@menu/bottom_bar_menu"
+       android:background="@color/BottomBarBolor"
+       app:labelVisibilityMode="unlabeled"
+       app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
+       app:itemTextColor="@drawable/bottom_nav_icon_color_selector"
        />
 </RelativeLayout>
